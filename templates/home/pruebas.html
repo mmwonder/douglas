@@ -1,0 +1,34 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/foundation.min.css' %}">
+</head>
+<body>
+    <h1 class="ejemplo1">Listando Elementos de una BD</h1>
+
+    {{ list_prueba }}
+
+    <ul>
+        
+        {% for prueba in list_prueba  %}
+          <li>{{  prueba.titulo }} </li>
+            <ul>
+                <li>{{ prueba.subtitulo }}</li>
+            </ul>
+        {% endfor %}
+            
+    </ul>
+
+    <!-- Anchors (links) -->
+<a href="about.html" class="button">Learn More</a>
+<a href="#features" class="button">View All Features</a>
+
+<!-- Buttons (actions) -->
+<button class="submit success button">Save</button>
+<button type="button" class="alert button">Delete</button>
+</body>
+</html>

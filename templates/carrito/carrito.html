@@ -1,0 +1,62 @@
+{% load static %}
+<script src="https://www.paypal.com/sdk/js?client-id=AVcMGrGFQ2z_n6X9xxtQjK0fv1U3o55aE8c624SnxYiTIbc-zeK31UPkZPp04dh_rOaFnbHtLYTa_lMT&currency=USD"></script>
+
+<div>
+    <table class="table carrito">
+        <thead>
+            <th>Carrrito</th>
+            <tr>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if request.session.carrito.items %}
+            {% for key,value in request.session.carrito.items %}
+            <tr>
+                <td>{{value.nombre}}</td>
+                <td>{{value.precio}}</td>
+                <td>{{value.cantidad}}</td>
+                <td>{{value.subtotal}}</td>
+                <td><a href="{% url 'carrito_app:Agregar' key %}" class="btn badge btn-success">+</a></td>
+                <td><a href="{% url 'carrito_app:Sacar' key %}" class="btn badge btn-danger">-</a></td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr><td colspan="4"><p>No hay Productos Seleccionados</p></td></tr>
+            {% endif %}
+            <tr>
+                
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2"><a href="" class="btn btn-primary">Total a pagar:</a><span class="ml-2">{{total_carrito}}</span></td><td>€</td>
+                <td><a href="{% url 'carrito_app:Limpiar'%}" class="btn btn-primary">Limpiar</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="paypal-button-container"></div>
+    <script>
+        paypal.Buttons({
+
+                        style:{
+                            color:'blue',
+                            shape:'pill',
+                            label: 'pay'
+                        },
+                        createOrder: function(data, actions) {
+                            return actions.order.create({
+                                purchase_units: [{
+                                    amount: {
+                                        value: {{total_carrito}}
+                                    }
+                                }]
+                            });
+                        },
+                    }).render('#paypal-button-container');
+    </script>
+</body>  
+        
+</div>
